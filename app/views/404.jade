@@ -1,0 +1,13 @@
+extends layouts/default
+
+block main
+  h1 Искомая Вами страница не найдена
+  br
+  span 404
+
+block content
+  #error-message-box
+    #error-stack-trace
+      - if(showStack)
+        pre
+          code!= error.stack

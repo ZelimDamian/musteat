@@ -1,0 +1,33 @@
+extends ../layouts/default
+
+block main
+  if (typeof pageTag !== 'undefined')
+    h1 Рестораны с тэгом &nbsp;
+      a.tag(href="/tags/"+pageTag) #{pageTag}
+        i.icon-tags
+  else
+    h1 Рестораны
+
+block content
+
+  each article in articles
+    .article
+      a.title(href='/articles/'+article._id, title=article.name) #{article.name}
+      p=article.body
+      .author
+        span= formatDate(article.createdAt, "%b %d, %Y at %I:%M %p")
+        span &nbsp;| Автор :&nbsp;
+        a(href="/users/"+article.user._id)=article.user.name
+        | &nbsp;|&nbsp;
+        if (article.tags)
+          span.tags
+            span Тэги :&nbsp;
+            each tag in article.tags.split(',')
+              a.tag(href="/tags/"+tag)
+                i.icon-tags
+                |  #{tag}
+
+  if (pages > 1)
+    .pagination
+      li
+        != createPagination(pages, page)

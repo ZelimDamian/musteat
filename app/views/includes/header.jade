@@ -1,0 +1,21 @@
+
+header#header
+  .navbar.navbar-fixed-top(role='navigation')
+    .navbar-inner
+      .container
+        a.brand(href='/') Кушать надо!м
+        .nav-collapse.collapse
+          ul.nav
+            li
+              a(href='/articles', title="article listing") Рестораны
+            li
+              a(href="/articles/new", title="new restaurant") Новый ресторан
+          ul.nav.pull-right
+            if (req.isAuthenticated())
+              li
+                a(href="/users/"+req.user.id, title="Profile") #{req.user.username}
+              li
+                a(href="/logout", title="logout") Выйти
+            else
+              li
+                a(href="/login", title="Login") Зарегистрироваться

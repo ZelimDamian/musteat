@@ -1,0 +1,16 @@
+
+ul.thumbnails
+  li.span4
+    .thumbnail
+        img(src='holder.js/300x200')
+        h3
+            a(href='/dishes/' + dish.id)=dish.name
+        p=dish.description
+
+        p
+          br
+          form.center.form-inline.confirm(action="/dishes/"+dish.id, method="post")
+            a.btn(href='../articles/'+dish._restaurant.id+'/dishes/'+dish._id+'/edit', title="edit") Редактировать
+            &nbsp;&nbsp;
+            input(type="hidden", name="_method", value="DELETE")
+            button.btn.btn-danger(type="submit") Удалить

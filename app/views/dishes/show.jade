@@ -1,0 +1,26 @@
+extends ../layouts/default
+
+block main
+  h1= dish.name
+
+block content
+  p=dish.description
+
+  if (dish.tags)
+    .tags
+      | Тэги :&nbsp;
+      each tag in dish.tags.split(',')
+        a.tag(href="/tags/"+tag)
+          i.icon-tags
+          |  #{tag}
+
+  p
+    br
+    form.center.form-inline.confirm(action="/dishes/"+dish.id, method="post")
+      a.btn(href='../articles/'+dish._restaurant.id+'/dishes/'+dish._id+'/edit', title="edit") Редактировать
+      &nbsp;&nbsp;
+      input(type="hidden", name="_method", value="DELETE")
+      button.btn.btn-danger(type="submit") Удалить
+      &nbsp;&nbsp;
+      a.btn(href='../articles/'+dish._restaurant.id, title="edit") Назад к #{dish._restaurant.name}
+

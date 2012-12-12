@@ -1,0 +1,41 @@
+extends ../layouts/default
+
+block main
+  h1= article.name
+
+block content
+  p=article.body
+  p.author
+    span Автор :&nbsp;
+    a(href="/users/"+article.user._id)=article.user.name
+  .date= formatDate(article.createdAt, "%b %d, %Y at %I:%M %p")
+  if (article.tags)
+    .tags
+      | Тэги :&nbsp;
+      each tag in article.tags.split(',')
+        a.tag(href="/tags/"+tag)
+          i.icon-tags
+          |  #{tag}
+
+  p
+    br
+    form.center.form-inline.confirm(action="/articles/"+article.id, method="post")
+      a.btn(href='/articles/'+article._id+'/edit', title="edit") Редактировать
+      &nbsp;&nbsp;
+      input(type="hidden", name="_method", value="DELETE")
+      button.btn.btn-danger(type="submit") Удалить
+      &nbsp;&nbsp;
+      a.btn.btn-primary(href='/articles/#{article.id}/dishes/new') Добавить блюдо
+
+  p
+    br
+    h2 Комментарии
+    each comment in article.comments
+      include ../comments/comment
+    include ../comments/form
+
+  p
+    br
+    h2 Меню
+    each dish in article.dishes
+      include ../dishes/dish
